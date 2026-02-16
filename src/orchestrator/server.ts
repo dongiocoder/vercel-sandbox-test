@@ -76,23 +76,21 @@ app.post("/process/stream", async (c) => {
 
     const { stream, cleanup } = await executeInSandboxStream(body);
 
-    // Return the SSE stream from the sandbox, clean up on completion
-    const response = new Response(stream, {
+    // Pipe through a TransformStream so we can detect when the stream ends
+    // and clean up the sandbox
+    const { readable, writable } = new TransformStream();
+    stream
+      .pipeTo(writable)
+      .catch(() => {})
+      .finally(() => cleanup());
+
+    return new Response(readable, {
       headers: {
         "Content-Type": "text/event-stream",
         "Cache-Control": "no-cache",
         Connection: "keep-alive",
       },
     });
-
-    // Schedule cleanup after stream ends
-    // The stream's reader will signal completion, then we stop the sandbox
-    stream
-      .pipeTo(new WritableStream())
-      .catch(() => {})
-      .finally(() => cleanup());
-
-    return response;
   } catch (error) {
     console.error("[Orchestrator] Streaming error:", error);
     return c.json(

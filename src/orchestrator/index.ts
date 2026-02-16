@@ -1,6 +1,9 @@
 import { serve } from "@hono/node-server";
 import { app } from "./server.js";
-import "dotenv/config";
+import { config } from "dotenv";
+
+// Load .env.local (standard for local dev secrets)
+config({ path: ".env.local" });
 
 const PORT = parseInt(process.env.ORCHESTRATOR_PORT || "4000", 10);
 
