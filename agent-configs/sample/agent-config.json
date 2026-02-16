@@ -1,0 +1,6 @@
+{
+  "allowedTools": ["Read", "Glob", "Grep"],
+  "mcpServers": {},
+  "additionalInstructions": "",
+  "maxTurns": 10
+}

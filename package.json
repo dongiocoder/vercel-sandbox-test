@@ -1,0 +1,26 @@
+{
+  "name": "vercel-sandbox-test",
+  "version": "1.0.0",
+  "description": "Ephemeral Vercel Sandbox agent execution MVP",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/orchestrator/index.ts",
+    "build:agent": "node scripts/build-agent.mjs",
+    "create-snapshot": "tsx scripts/create-snapshot.ts",
+    "test:e2e": "tsx scripts/test-e2e.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@vercel/sandbox": "^1.5.0",
+    "dotenv": "^17.2.3",
+    "hono": "^4.6.0",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/uuid": "^10.0.0",
+    "esbuild": "^0.24.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
